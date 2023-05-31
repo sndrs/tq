@@ -1,0 +1,10 @@
+{
+	"lock": false,
+	"tasks": {
+		"start": "deno run -A simple_api.ts"
+	},
+	"fmt": {
+		"options": { "useTabs": true },
+		"files": { "exclude": ["src/_site/build", ".cache"] }
+	}
+}
