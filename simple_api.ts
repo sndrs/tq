@@ -25,7 +25,12 @@ async function reqHandler(req: Request) {
 		.replace(/(<a .*href=["'])(https?:\/\/thequietus.com)/gm, "$1")
 		.replace(/http:/gm, "https:");
 
-	return new Response(newBody, backendResponse);
+	const response = new Response(newBody, backendResponse);
+
+	// Prevent search engines from indexing this site
+	response.headers.set("X-Robots-Tag", "noindex");
+
+	return response;
 }
 
 serve(reqHandler);
