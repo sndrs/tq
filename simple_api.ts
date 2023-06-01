@@ -8,7 +8,23 @@ async function reqHandler(req: Request) {
 	});
 	console.timeEnd(`fetch ${reqPath}`);
 
-	return backendResponse;
+	const backendBody = await backendResponse.text();
+
+	const newBody = backendBody
+		// src="/ -> src="https://thequietus.com/
+		.replace(
+			/(src=["'])(\/)/gm,
+			"$1https://thequietus.com/",
+		)
+		// <link href="/ -> <link href="https://thequietus.com/
+		.replace(
+			/(<link .*href=["'])(\/)/gm,
+			"$1https://thequietus.com/",
+		)
+		// <a href="/ -> <a href="https://thequietus.com/
+		.replace(/(<a .*href=["'])(https?:\/\/thequietus.com)/gm, "$1");
+
+	return new Response(newBody, backendResponse);
 }
 
 serve(reqHandler);
