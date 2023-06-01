@@ -22,7 +22,8 @@ async function reqHandler(req: Request) {
 			"$1https://thequietus.com/",
 		)
 		// <a href="/ -> <a href="https://thequietus.com/
-		.replace(/(<a .*href=["'])(https?:\/\/thequietus.com)/gm, "$1");
+		.replace(/(<a .*href=["'])(https?:\/\/thequietus.com)/gm, "$1")
+		.replace("http:", "https:");
 
 	return new Response(newBody, backendResponse);
 }
